@@ -1,6 +1,6 @@
 import pandas as pd
 from sqlalchemy import create_engine, text
-from config import db_config
+from src.config import db_config
 
 def get_data_from_db():
     # Create a connection to the PostgreSQL database

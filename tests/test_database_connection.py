@@ -1,17 +1,15 @@
 import unittest
 import pandas as pd
-from src.database_connection import DatabaseHandler
-from src.config import db_config
-from src.utils import fetch_data_from_db
+from src.loader import DataLoader
 
-class TestDatabaseHandler(unittest.TestCase):
+class TestDatabaseConnection(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.db_handler = DatabaseHandler(db_config)
+        cls.data_loader = DataLoader()
 
-    def test_fetch_data_from_db(self):
+    def test_load_data(self):
         query = "SELECT * FROM xdr_data"
-        df = fetch_data_from_db(query)
+        df = self.data_loader.load_data(query)
 
         # Check if the function returns a DataFrame
         self.assertIsInstance(df, pd.DataFrame)

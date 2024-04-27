@@ -1,9 +1,13 @@
 import unittest
+import warnings
 from src.preprocessing import preprocess_data
 from src.utils import fetch_telecom_data
 
 class TestPreprocessData(unittest.TestCase):
     def test_unique_columns(self):
+        # Ignore the DeprecationWarning
+        # warnings.filterwarnings("ignore", category=DeprecationWarning)
+
         # Load the data
         df = fetch_telecom_data()
 

@@ -12,5 +12,8 @@ def save_data_to_db(df, table_name):
     db_handler.store_data_in_db(df, table_name)
 
 def fetch_telecom_data():
-    query = 'SELECT * FROM xdr_data'
+    return fetch_data_from_db_table('xdr_data')
+
+def fetch_data_from_db_table(table_name):
+    query = f'SELECT * FROM {table_name}'
     return fetch_data_from_db(query)

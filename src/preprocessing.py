@@ -5,7 +5,7 @@ from sklearn.compose import ColumnTransformer
 import numpy as np
 import pandas as pd
 
-def preprocess_data(df, timestamp_cols, numeric_features, categorical_features):
+def preprocess_data(df, timestamp_cols, numeric_features, categorical_features, numeric_scaling=None):
     # Replace 'undefined' with NaN
     df.replace('undefined', np.nan, inplace=True)
 
@@ -30,9 +30,13 @@ def preprocess_data(df, timestamp_cols, numeric_features, categorical_features):
     numeric_features = [feature for feature in numeric_features if feature not in categorical_features]
 
     # Define preprocessing for numeric columns (replace missing values with mean and scale values)
-    numeric_transformer = Pipeline(steps=[
-        ('imputer', SimpleImputer(strategy='mean')),
-        ('scaler', StandardScaler())])
+    if numeric_scaling:
+        numeric_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='mean')),
+            ('scaler', StandardScaler())])
+    else:
+        numeric_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='mean'))])
 
     # Define preprocessing for categorical columns (replace missing values with mode)
     categorical_transformer = Pipeline(steps=[

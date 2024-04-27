@@ -1,8 +1,12 @@
-from sqlalchemy import text
-from src.database_connection import DatabaseHandler
+from src.database_handler import DatabaseHandler
 from src.config import db_config
 
+# Create an instance of DatabaseHandler at the module level
+db_handler = DatabaseHandler(db_config)
+
 def fetch_data_from_db(query):
-    db_handler = DatabaseHandler(db_config)
     df = db_handler.get_data_from_db(query)
     return df
+
+def save_data_to_db(df, table_name):
+    db_handler.store_data_in_db(df, table_name)

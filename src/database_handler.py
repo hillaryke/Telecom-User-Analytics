@@ -12,6 +12,6 @@ class DatabaseHandler:
             df = pd.read_sql_query(query, conn)
         return df
 
-    def save_data_to_db(self, df, table_name, if_exists='replace'):
+    def store_data_in_db(self, df, table_name, if_exists='replace'):
         with self.engine.connect() as conn:
             df.to_sql(table_name, conn, if_exists=if_exists)

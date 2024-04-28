@@ -1,5 +1,6 @@
 from src.database_handler import DatabaseHandler
 from src.config import db_config
+import pandas as pd
 
 # Create an instance of DatabaseHandler at the module level
 db_handler = DatabaseHandler(db_config)
@@ -17,3 +18,6 @@ def fetch_telecom_data():
 def fetch_data_from_db_table(table_name):
     query = f'SELECT * FROM {table_name}'
     return fetch_data_from_db(query)
+
+def export_to_csv(df: pd.DataFrame, file_name: str):
+    df.to_csv(file_name, index=False)

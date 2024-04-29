@@ -6,6 +6,7 @@ import altair as alt
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestRegressor
 import numpy as np
+import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -112,15 +113,41 @@ def plot_mse():
     # Create a DataFrame for the scores
     df_scores = pd.DataFrame(mse_scores, columns=['MSE'])
 
-    # Add the mean of the MSE scores to the DataFrame
-    df_scores.loc['Mean'] = df_scores.mean()
+    mean_score = df_scores.mean()
+    st.write(f'Mean MSE: {mean_score[0]}')
+    st.line_chart(df_scores)
 
     # Plot the MSE scores
-    st.line_chart(df_scores)
+    # st.line_chart(df_scores)
+
+def plot_avg_satisfaction_score_per_cluster():
+    # Load the data
+    df_experience = pd.read_csv(data_path + 'user_satisfaction_scores.csv')
+
+    # Calculate the satisfaction score as the average of the engagement score and the experience score
+    df_experience['satisfaction_score'] = (df_experience['engagement_score'] + df_experience['experience_score']) / 2
+
+    # Aggregate the average satisfaction and experience score per cluster
+    average_scores = df_experience.groupby('cluster')[['satisfaction_score', 'experience_score']].mean()
+
+    # Display the DataFrame in Streamlit
+    st.dataframe(average_scores)
+
+    # Plot the average scores using matplotlib
+    fig, ax = plt.subplots()
+    average_scores.plot(kind='bar', ax=ax)
+    plt.title('Average Satisfaction and Experience Score per Cluster')
+    plt.xlabel('Cluster')
+    plt.ylabel('Score')
+
+    # Display the plot in Streamlit
+    st.pyplot(fig)
+
 
 def main():
     st.title('Tellco User Analytics Dashboard')
     plot_mse()
+    plot_avg_satisfaction_score_per_cluster()
 
 if __name__ == '__main__':
     main()

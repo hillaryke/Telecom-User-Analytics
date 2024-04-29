@@ -120,6 +120,7 @@ def plot_mse():
     # Plot the MSE scores
     # st.line_chart(df_scores)
 
+
 def plot_avg_satisfaction_score_per_cluster():
     # Load the data
     df_experience = pd.read_csv(data_path + 'user_satisfaction_scores.csv')
@@ -132,6 +133,9 @@ def plot_avg_satisfaction_score_per_cluster():
 
     # Display the DataFrame in Streamlit
     st.dataframe(average_scores)
+
+    # Set the style of matplotlib to dark background
+    plt.style.use('dark_background')
 
     # Plot the average scores using matplotlib
     fig, ax = plt.subplots()
